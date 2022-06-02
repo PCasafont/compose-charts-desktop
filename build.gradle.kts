@@ -5,6 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.6.10"
     id("org.jetbrains.compose") version "1.1.0"
+    `maven-publish`
 }
 
 group = "io.github.bytebeats"
@@ -31,6 +32,18 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "compose-charts-desktop"
             packageVersion = "1.0.0"
+        }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            group = project.group
+            artifactId = "compose-charts-desktop"
+            version = project.version.toString()
+
+            from(components["java"])
         }
     }
 }
